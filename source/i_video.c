@@ -190,10 +190,10 @@ void I_InitGraphics (void)
 	s_Fb.red.length = 8;
 	s_Fb.transp.length = 8;
 
-	s_Fb.blue.offset = 0;
-	s_Fb.green.offset = 8;
-	s_Fb.red.offset = 16;
-	s_Fb.transp.offset = 24;
+	s_Fb.blue.offset = 24;
+	s_Fb.green.offset = 16;
+	s_Fb.red.offset = 8;
+	s_Fb.transp.offset = 0;
 	
 
     printf("I_InitGraphics: framebuffer: x_res: %d, y_res: %d, x_virtual: %d, y_virtual: %d, bpp: %d\n",
