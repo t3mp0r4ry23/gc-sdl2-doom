@@ -26,6 +26,7 @@
 #include "deh_str.h"
 #include "doomtype.h"
 #include "doomkeys.h"
+#include "i_gcpad.h"
 #include "i_joystick.h"
 #include "i_system.h"
 #include "i_swap.h"
@@ -46,64 +47,52 @@ static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
 static unsigned int s_KeyQueueReadIndex = 0;
 
+int stickLeft = 0;
+int stickRight = 0;
+int stickUp = 0;
+int stickDown = 0;
+int cStickLeft = 0;
+int cStickRight = 0;
 
-//TODO: Convert to key-map
 static unsigned char toDoomKey(unsigned int key)
 {
   switch (key)
   {
-    case SDLK_RETURN:
-      key = KEY_ENTER;
-      break;
-    case SDLK_F1:
-      key = KEY_F1;
-      break;
-    case SDLK_F2:
-      key = KEY_F2;
-      break;
-    case SDLK_F3:
-      key = KEY_F3;
-      break;
-    case SDLK_LALT:
-    case SDLK_RALT:
-      key = KEY_LALT;
-      break;
-    case SDLK_ESCAPE:
-      key = KEY_ESCAPE;
-      break;
-    case SDLK_a:
-    case SDLK_LEFT:
+    case PAD_BUTTON_LEFT:
       key = KEY_LEFTARROW;
       break;
-    case SDLK_d:
-    case SDLK_RIGHT:
+    case PAD_BUTTON_RIGHT:
       key = KEY_RIGHTARROW;
       break;
-    case SDLK_w:
-    case SDLK_UP:
+    case PAD_BUTTON_UP:
       key = KEY_UPARROW;
       break;
-    case SDLK_s:
-    case SDLK_DOWN:
+    case PAD_BUTTON_DOWN:
       key = KEY_DOWNARROW;
       break;
-    case SDLK_LCTRL:
-    case SDLK_RCTRL:
+    case PAD_TRIGGER_Z:
       key = KEY_FIRE;
       break;
-    case SDLK_SPACE:
+    case PAD_TRIGGER_R:
+      //switch weapon +1
+      break;
+    case PAD_TRIGGER_L:
+      //switch weapon -1
+      break;
+    case PAD_BUTTON_A:
       key = KEY_USE;
       break;
-    case SDLK_LSHIFT:
-    case SDLK_RSHIFT:
-      key = KEY_RSHIFT;
+    case PAD_BUTTON_B:
+      key = KEY_ENTER;
       break;
-    case SDL_BUTTON_RIGHT:
-    case SDL_BUTTON_LEFT:
-      key = KEY_FIRE;
+    case PAD_BUTTON_X:
+      key = KEY_STRAFE_R;
       break;
-    case SDL_BUTTON_MIDDLE:
-      key = KEY_USE;
+    case PAD_BUTTON_Y:
+      key = KEY_STRAFE_L;
+      break;
+    case PAD_BUTTON_START:
+      key = KEY_ESCAPE;
       break;
     default:
       key = tolower(key);
@@ -123,46 +112,67 @@ static void queueKeyPress(int pressed, unsigned int keyCode)
   s_KeyQueueWriteIndex %= KEYQUEUE_SIZE;
 }
 
-static void SDL_PollEvents() 
+static void PAD_PollEvents() 
 {
-  SDL_Event e;
+  PAD_ScanPads();
 
-  while (SDL_PollEvent(&e))
-  {
-    if (e.type == SDL_QUIT)
-    {
-      atexit(SDL_Quit);
-      exit(1);
-    }
-
-    if (e.type == SDL_KEYDOWN) 
-    {
-      //printf("KeyPress:%d sym:%d\n", e.xkey.keycode, sym);
-      queueKeyPress(1, e.key.keysym.sym);
-    } 
-    else if (e.type == SDL_KEYUP) 
-    {
-      //printf("KeyRelease:%d sym:%d\n", e.xkey.keycode, sym);
-      queueKeyPress(0, e.key.keysym.sym);
-    }
-    else if(e.type == SDL_MOUSEBUTTONDOWN) 
-    {
-      //printf("SDL_MOUSE_PRESSED: %d\n", e.button.button);
-      queueKeyPress(1, e.button.button);
-    }
-    else if(e.type == SDL_MOUSEBUTTONUP)
-    {
-      //printf("SDL_MOUSE_RELEASED: %d\n", e.button.button);
-      queueKeyPress(0, e.button.button);
-    }
-
+  if ((PAD_StickX(gamepad) < -10) && !stickLeft) {
+    queueKeyPress(1, PAD_BUTTON_Y);
+    stickLeft = 1;
+  } else if (!(PAD_StickX(gamepad) < -10) && stickLeft) {
+    queueKeyPress(0, PAD_BUTTON_Y);
+    stickLeft = 0;
+  }
+  if ((PAD_StickX(gamepad) > 10) && !stickRight) {
+    queueKeyPress(1, PAD_BUTTON_X);
+    stickRight = 1;
+  } else if (!(PAD_StickX(gamepad) > 10) && stickRight) {
+    queueKeyPress(1, PAD_BUTTON_X);
+    stickRight = 0;
+  }
+  
+  if ((PAD_StickY(gamepad) < -10) && !stickUp) {
+    queueKeyPress(1, PAD_BUTTON_UP);
+    stickLeft = 1;
+  } else if (!(PAD_StickX(gamepad) < -10) && stickUp) {
+    queueKeyPress(0, PAD_BUTTON_UP);
+    stickLeft = 0;
+  }
+  if ((PAD_StickX(gamepad) > 10) && !stickDown) {
+    queueKeyPress(1, PAD_BUTTON_DOWN);
+    stickRight = 1;
+  } else if (!(PAD_StickX(gamepad) > 10) && stickDown) {
+    queueKeyPress(1, PAD_BUTTON_DOWN);
+    stickRight = 0;
   }
 
+  if ((PAD_SubStickX(gamepad) < -10) && !cStickLeft) {
+    queueKeyPress(1, PAD_BUTTON_LEFT);
+    stickLeft = 1;
+  } else if (!(PAD_SubStickX(gamepad) < -10) && cStickLeft) {
+    queueKeyPress(0, PAD_BUTTON_LEFT);
+    stickLeft = 0;
+  }
+  if ((PAD_SubStickX(gamepad) > 10) && !cStickRight) {
+    queueKeyPress(1, PAD_BUTTON_RIGHT);
+    stickRight = 1;
+  } else if (!(PAD_SubStickX(gamepad) > 10) && cStickRight) {
+    queueKeyPress(1, PAD_BUTTON_RIGHT);
+    stickRight = 0;
+  }
+
+  for (int i = 0; i < sizeof(buttons) / sizeof(buttons[0]); i++) {
+    if (PAD_ButtonsDown(gamepad) & buttons[i]) {
+      queueKeyPress(1, buttons[i]);
+    } else if (PAD_ButtonsUp(gamepad) & buttons[i]) {
+      queueKeyPress(0, buttons[i]);
+    }
+  }
 }
 
 int GetKey(int* pressed, unsigned char* doomKey)
 {
-    SDL_PollEvents();
+    PAD_PollEvents();
     
     uint8_t k_pressed = 0;
 

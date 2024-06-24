@@ -53,6 +53,7 @@
 #include "p_saveg.h"
 
 #include "i_endoom.h"
+#include "i_gcpad.h"
 #include "i_joystick.h"
 #include "i_system.h"
 #include "i_timer.h"
@@ -1609,6 +1610,7 @@ void D_DoomMain (void)
     I_CheckIsScreensaver();
     I_InitTimer();
     I_InitJoystick();
+    I_InitGCPad();
     I_InitSound(true);
     I_InitMusic();
 
