@@ -40,7 +40,11 @@
 #include <SDL2/SDL.h>
 
 #define SDL_RESX 320 * 2 //FIXME: Do scaling via arg in video interface
-#define SDL_RESY 200 * 2 //lowered for gamecube
+#ifdef STRETCHED
+#define SDL_RESY 220 * 2
+#else
+#define SDL_RESY 200 * 2
+#endif
 
 uint32_t *fb_SDL;
 

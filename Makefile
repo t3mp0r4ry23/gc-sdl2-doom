@@ -25,7 +25,7 @@ INCLUDES	:=
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS		= -g -O2 -Wall $(MACHDEP) $(INCLUDE) $(shell $(DEVKITPRO)/portlibs/gamecube/bin/powerpc-eabi-pkg-config sdl2 SDL2_mixer --cflags) -D_REENTRANT -D_THREAD_SAFE -DFEATURE_SOUND
+CFLAGS		= -g -O2 -Wall $(MACHDEP) $(INCLUDE) $(shell $(DEVKITPRO)/portlibs/gamecube/bin/powerpc-eabi-pkg-config sdl2 SDL2_mixer --cflags) -D_REENTRANT -D_THREAD_SAFE -DFEATURE_SOUND -DSTRETCHED
 CXXFLAGS	= $(CFLAGS)
 
 LDFLAGS		= -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
