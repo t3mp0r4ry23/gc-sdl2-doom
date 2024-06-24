@@ -41,7 +41,8 @@
 #include "w_wad.h"
 #include "z_zone.h"
 
-#define KEYQUEUE_SIZE 16
+//extended just in case
+#define KEYQUEUE_SIZE 32
 
 static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
@@ -116,49 +117,49 @@ static void PAD_PollEvents()
 {
   PAD_ScanPads();
 
-  if ((PAD_StickX(gamepad) < -10) && !stickLeft) {
+  if ((PAD_StickX(gamepad) <= -10) && !stickLeft) {
     queueKeyPress(1, PAD_BUTTON_Y);
     stickLeft = 1;
-  } else if (!(PAD_StickX(gamepad) < -10) && stickLeft) {
+  } else if ((PAD_StickX(gamepad) > -10) && stickLeft) {
     queueKeyPress(0, PAD_BUTTON_Y);
     stickLeft = 0;
   }
-  if ((PAD_StickX(gamepad) > 10) && !stickRight) {
+  if ((PAD_StickX(gamepad) >= 10) && !stickRight) {
     queueKeyPress(1, PAD_BUTTON_X);
     stickRight = 1;
-  } else if (!(PAD_StickX(gamepad) > 10) && stickRight) {
-    queueKeyPress(1, PAD_BUTTON_X);
+  } else if ((PAD_StickX(gamepad) < 10) && stickRight) {
+    queueKeyPress(0, PAD_BUTTON_X);
     stickRight = 0;
   }
   
-  if ((PAD_StickY(gamepad) < -10) && !stickUp) {
+  if ((PAD_StickY(gamepad) >= 10) && !stickUp) {
     queueKeyPress(1, PAD_BUTTON_UP);
-    stickLeft = 1;
-  } else if (!(PAD_StickX(gamepad) < -10) && stickUp) {
+    stickUp = 1;
+  } else if ((PAD_StickY(gamepad) < 10) && stickUp) {
     queueKeyPress(0, PAD_BUTTON_UP);
-    stickLeft = 0;
+    stickUp = 0;
   }
-  if ((PAD_StickX(gamepad) > 10) && !stickDown) {
+  if ((PAD_StickY(gamepad) <= -10) && !stickDown) {
     queueKeyPress(1, PAD_BUTTON_DOWN);
-    stickRight = 1;
-  } else if (!(PAD_StickX(gamepad) > 10) && stickDown) {
-    queueKeyPress(1, PAD_BUTTON_DOWN);
-    stickRight = 0;
+    stickDown = 1;
+  } else if ((PAD_StickY(gamepad) > -10) && stickDown) {
+    queueKeyPress(0, PAD_BUTTON_DOWN);
+    stickDown = 0;
   }
 
-  if ((PAD_SubStickX(gamepad) < -10) && !cStickLeft) {
+  if ((PAD_SubStickX(gamepad) <= -10) && !cStickLeft) {
     queueKeyPress(1, PAD_BUTTON_LEFT);
-    stickLeft = 1;
-  } else if (!(PAD_SubStickX(gamepad) < -10) && cStickLeft) {
+    cStickLeft = 1;
+  } else if ((PAD_SubStickX(gamepad) > -10) && cStickLeft) {
     queueKeyPress(0, PAD_BUTTON_LEFT);
-    stickLeft = 0;
+    cStickLeft = 0;
   }
-  if ((PAD_SubStickX(gamepad) > 10) && !cStickRight) {
+  if ((PAD_SubStickX(gamepad) >= 10) && !cStickRight) {
     queueKeyPress(1, PAD_BUTTON_RIGHT);
-    stickRight = 1;
-  } else if (!(PAD_SubStickX(gamepad) > 10) && cStickRight) {
-    queueKeyPress(1, PAD_BUTTON_RIGHT);
-    stickRight = 0;
+    cStickRight = 1;
+  } else if ((PAD_SubStickX(gamepad) < 10) && cStickRight) {
+    queueKeyPress(0, PAD_BUTTON_RIGHT);
+    cStickRight = 0;
   }
 
   for (int i = 0; i < sizeof(buttons) / sizeof(buttons[0]); i++) {
