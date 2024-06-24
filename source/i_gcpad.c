@@ -5,6 +5,9 @@
 
 #include "i_gcpad.h"
 
+PADStatus gcPads[4];
+int gamepad;
+
 void I_InitGCPad(void) {
 	//init pads
 	PAD_Init();
