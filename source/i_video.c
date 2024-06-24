@@ -40,7 +40,7 @@
 #include <SDL2/SDL.h>
 
 #define SDL_RESX 320 * 2 //FIXME: Do scaling via arg in video interface
-#define SDL_RESY 200 * 2 //lowered for gamecube
+#define SDL_RESY 220 * 2 //lowered for gamecube
 
 uint32_t *fb_SDL;
 
@@ -293,7 +293,7 @@ void I_FinishUpdate (void)
     /* 600 = s_Fb height, 200 screenheight */
     /* 600 = s_Fb height, 200 screenheight */
     /* 2048 =s_Fb width, 320 screenwidth */
-    y_offset     = (((s_Fb.yres - (SCREENHEIGHT * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2;
+    y_offset     = 20;
     x_offset     = (((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2; // XXX: siglent FB hack: /4 instead of /2, since it seems to handle the resolution in a funny way
     //x_offset     = 0;
     x_offset_end = ((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8) - x_offset;
@@ -309,11 +309,16 @@ void I_FinishUpdate (void)
         int i;
         for (i = 0; i < fb_scaling; i++) {
             line_out += x_offset;
-            //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
-            cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
+            if (y_offset) {
+                y_offset--;
+            } else {
+                //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
+                cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
+            }
             line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
         }
         line_in += SCREENWIDTH;
+        y_offset = 20;
     }
 
 	SDL_UpdateTexture(texture, NULL, fb_SDL, SDL_RESX * sizeof(uint32_t));
