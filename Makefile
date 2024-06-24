@@ -25,7 +25,7 @@ INCLUDES	:=
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS		= -g -O2 -Wall $(MACHDEP) $(INCLUDE) -D_REENTRANT -D_THREAD_SAFE
+CFLAGS		= -g -O2 -Wall $(MACHDEP) $(INCLUDE) $(shell $(DEVKITPRO)/portlibs/gamecube/bin/powerpc-eabi-pkg-config sdl2 SDL2_mixer --cflags) -D_REENTRANT -D_THREAD_SAFE -DFEATURE_SOUND
 CXXFLAGS	= $(CFLAGS)
 
 LDFLAGS		= -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
@@ -33,7 +33,7 @@ LDFLAGS		= -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-logc -lm -lSDL2 -lSDL2_mixer $(shell $(DEVKITPRO)/portlibs/gamecube/bin/sdl2-config --cflags --libs)
+LIBS	:=	-lSDL2_mixer -lSDL2main -lSDL2 -laesnd -lfat -lopusfile -lopus -lvorbisidec -lmodplug -lstdc++ -lmpg123 -lFLAC -logg -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

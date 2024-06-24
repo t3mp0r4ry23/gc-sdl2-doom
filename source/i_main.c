@@ -24,6 +24,9 @@
 //#include "i_system.h"
 #include "m_argv.h"
 
+//funky little fix for devkitpro compatibility
+#include "i_main.h"
+
 //
 // D_DoomMain()
 // Not a globally visible function, just included for source reference,
@@ -35,7 +38,7 @@ void D_DoomMain (void);
 void M_FindResponseFile(void);
 
 
-int main(int argc, char **argv)
+int I_Main(int argc, char **argv)
 {
     // save arguments
 
