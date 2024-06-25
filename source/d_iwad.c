@@ -576,7 +576,7 @@ static void BuildIWADDirList(void)
 
     // Look in the specified directory in the sd card, as we don't know what the current directory is.
 
-    AddIWADDir("/sdl2-doom/wads");
+    AddIWADDir("sd:/sdl2-doom/wads");
 
     // Add DOOMWADDIR if it is in the environment
 
