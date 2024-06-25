@@ -44,14 +44,15 @@ int main(int argc, char **argv) {
 	struct dirent *list_item;
 
 	list_dir = opendir("sd:/sdl2-doom/wads");
-	if (list_dir != NULL) {
+	/*if (list_dir != NULL) {
 		int i = 0;
-		while ((list_item = readdir(list_dir)) && i < 32) {
+		while (i < 32) {
+			list_item = readdir(list_dir);
 			strcpy(wads[i], list_item->d_name);
 			i++;
 		}
 		wadCount = i;
-	}
+	}*/
 
 	while (!done) {
 		PAD_ScanPads();
@@ -59,9 +60,9 @@ int main(int argc, char **argv) {
 		GRRLIB_SetBackgroundColour(0x1e, 0x1e, 0x2e, 0xFF);
 		GRRLIB_Printf(64, 64, tex_font, 0xcdd6f4ff, 2, sdMessage);
 
-		for (int y = 0; y < 32; y++) {
+		/*for (int y = 0; y < 32; y++) {
 			GRRLIB_Printf(64, 128 + y * 32, tex_font, 0xcdd6f4ff, 2, wads[y]);
-		}
+		}*/
 		//selection code goes here
 
 		GRRLIB_Render();
