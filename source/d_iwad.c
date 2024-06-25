@@ -745,10 +745,6 @@ char *D_FindIWAD(int mask, GameMission_t *mission)
         {
             result = SearchDirectoryForIWAD(iwad_dirs[i], mask, mission);
         }
-
-        if (result == NULL) {
-            result = D_FindWADByName("DOOM1.wad");
-        }
     }
 
     return result;
