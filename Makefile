@@ -33,7 +33,7 @@ LDFLAGS		= -g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lSDL2_mixer -lSDL2main -lSDL2 -laesnd -lfat -lopusfile -lopus -lvorbisidec -lmodplug -lstdc++ -lmpg123 -lFLAC -logg -logc -lm
+LIBS	:=	-lgrrlib -lpngu -lSDL2_mixer -lSDL2main -lSDL2 -laesnd -lfat -lfreetype -lbz2 -lpng16 -ljpeg -lopusfile -lopus -lvorbisidec -lmodplug -lstdc++ -lmpg123 -lFLAC -logg -lz -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -139,9 +139,9 @@ $(OFILES_SOURCES) : $(HFILES)
 -include $(DEPENDS)
 
 #---------------------------------------------------------------------------------
-# This rule links in binary data with the .wad extension
+# This rule links in binary data with the .png extension
 #---------------------------------------------------------------------------------
-%.wad.o	%_wad.h :	%.wad
+%.png.o	%_png.h :	%.png
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	$(bin2o)
