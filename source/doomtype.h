@@ -61,11 +61,10 @@
 // standard and defined to include stdint.h, so include this. 
 
 #include <inttypes.h>
-#include <stdbool.h>
 
-#if defined(__cplusplus) || defined(__bool_true_false_are_defined)
+#ifdef __cplusplus
 
-// Use builtin bool type with C++ or stdbool.h
+// Use builtin bool type with C++.
 
 typedef bool boolean;
 
