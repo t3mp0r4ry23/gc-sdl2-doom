@@ -7,7 +7,7 @@
 #include <sdcard/gcsd.h>
 #include <fat.h>
 #include "i_main.h"
-static int devices[] = {&__io_gcsda, &__io_gcsdb, &__io_gcsdc};
+static int devices[] = {&__io_gcsda, &__io_gcsdb, &__io_gcsd2};
 
 int main(int argc, char **argv) {
 	for (int i = 0; i < sizeof(devices) / sizeof(int); i++) {
