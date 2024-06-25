@@ -747,7 +747,7 @@ char *D_FindIWAD(int mask, GameMission_t *mission)
         }
 
         if (result == NULL) {
-            result = D_FindWADByName("sdb:/DOOM1.wad");
+            result = D_FindWADByName("sd:/sdl2-doom/DOOM1.wad");
         }
     }
 

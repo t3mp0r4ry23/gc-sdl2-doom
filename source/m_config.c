@@ -2042,9 +2042,28 @@ float M_GetFloatVariable(char *name)
 
 static char *GetDefaultConfigDir(void)
 {
-    char *result = (char *)malloc(2);
-    result[0] = '.';
-    result[1] = '\0';
+    char *result = (char *)malloc(21);
+    result[0] = 's';
+    result[1] = 'd';
+    result[2] = ':';
+    result[3] = '/';
+    result[4] = 's';
+    result[5] = 'd';
+    result[6] = 'l';
+    result[7] = '2';
+    result[8] = '-';
+    result[9] = 'd';
+    result[10] = 'o';
+    result[11] = 'o';
+    result[12] = 'm';
+    result[13] = '/';
+    result[14] = 'c';
+    result[15] = 'o';
+    result[16] = 'n';
+    result[17] = 'f';
+    result[18] = 'i';
+    result[19] = 'g';
+    result[20] = '\0';
 
     return result;
 }
