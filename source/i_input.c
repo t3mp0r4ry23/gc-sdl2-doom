@@ -55,57 +55,9 @@ int stickDown = 0;
 int cStickLeft = 0;
 int cStickRight = 0;
 
-static unsigned char toDoomKey(unsigned int key)
-{
-  switch (key)
-  {
-    case PAD_BUTTON_LEFT:
-      key = KEY_LEFTARROW;
-      break;
-    case PAD_BUTTON_RIGHT:
-      key = KEY_RIGHTARROW;
-      break;
-    case PAD_BUTTON_UP:
-      key = KEY_UPARROW;
-      break;
-    case PAD_BUTTON_DOWN:
-      key = KEY_DOWNARROW;
-      break;
-    case PAD_TRIGGER_Z:
-      key = KEY_FIRE;
-      break;
-    case PAD_TRIGGER_R:
-      //switch weapon +1
-      break;
-    case PAD_TRIGGER_L:
-      //switch weapon -1
-      break;
-    case PAD_BUTTON_A:
-      key = KEY_USE;
-      break;
-    case PAD_BUTTON_B:
-      key = KEY_ENTER;
-      break;
-    case PAD_BUTTON_X:
-      key = KEY_STRAFE_R;
-      break;
-    case PAD_BUTTON_Y:
-      key = KEY_STRAFE_L;
-      break;
-    case PAD_BUTTON_START:
-      key = KEY_ESCAPE;
-      break;
-    default:
-      key = tolower(key);
-      break;
-    }
-
-  return key;
-}
-
 static void queueKeyPress(int pressed, unsigned int keyCode)
 {
-  unsigned char key = toDoomKey(keyCode);
+  unsigned char key = keyCode;
   unsigned short keyData = (pressed << 8) | key;
 
   s_KeyQueue[s_KeyQueueWriteIndex] = keyData;

@@ -15,6 +15,7 @@
 //
 
 #include <stdio.h>
+#include <ogc/pad.h>
 
 #include "doomtype.h"
 #include "doomkeys.h"
@@ -26,16 +27,16 @@
 // Keyboard controls
 //
 
-int key_right = KEY_RIGHTARROW;
-int key_left = KEY_LEFTARROW;
-int key_up = KEY_UPARROW;
-int key_down = KEY_DOWNARROW; 
-int key_strafeleft = KEY_STRAFE_L;
-int key_straferight = KEY_STRAFE_R;
-int key_fire = KEY_FIRE;
-int key_use = KEY_USE;
-int key_strafe = KEY_RALT;
-int key_speed = KEY_RSHIFT; 
+int key_right = PAD_BUTTON_RIGHT;
+int key_left = PAD_BUTTON_LEFT;
+int key_up = PAD_BUTTON_UP;
+int key_down = PAD_BUTTON_DOWN; 
+int key_strafeleft = PAD_BUTTON_Y;
+int key_straferight = PAD_BUTTON_X;
+int key_fire = PAD_TRIGGER_Z;
+int key_use = PAD_BUTTON_A;
+int key_strafe = -1;
+int key_speed = PAD_BUTTON_B; 
 
 // 
 // Heretic keyboard controls
@@ -127,15 +128,15 @@ int key_weapon5 = '5';
 int key_weapon6 = '6';
 int key_weapon7 = '7';
 int key_weapon8 = '8';
-int key_prevweapon = 0;
-int key_nextweapon = 0;
+int key_prevweapon = PAD_TRIGGER_L;
+int key_nextweapon = PAD_TRIGGER_R;
 
 // Map control keys:
 
-int key_map_north     = KEY_UPARROW;
-int key_map_south     = KEY_DOWNARROW;
-int key_map_east      = KEY_RIGHTARROW;
-int key_map_west      = KEY_LEFTARROW;
+int key_map_north     = PAD_BUTTON_UP;
+int key_map_south     = PAD_BUTTON_DOWN;
+int key_map_east      = PAD_BUTTON_LEFT;
+int key_map_west      = PAD_BUTTON_RIGHT;
 int key_map_zoomin    = '=';
 int key_map_zoomout   = '-';
 int key_map_toggle    = KEY_TAB;
@@ -147,15 +148,15 @@ int key_map_clearmark = 'c';
 
 // menu keys:
 
-int key_menu_activate  = KEY_ESCAPE;
-int key_menu_up        = KEY_UPARROW;
-int key_menu_down      = KEY_DOWNARROW;
-int key_menu_left      = KEY_LEFTARROW;
-int key_menu_right     = KEY_RIGHTARROW;
-int key_menu_back      = KEY_BACKSPACE;
-int key_menu_forward   = KEY_ENTER;
-int key_menu_confirm   = 'y';
-int key_menu_abort     = 'n';
+int key_menu_activate  = PAD_BUTTON_MENU;
+int key_menu_up        = PAD_BUTTON_UP;
+int key_menu_down      = PAD_BUTTON_DOWN;
+int key_menu_left      = PAD_BUTTON_LEFT;
+int key_menu_right     = PAD_BUTTON_RIGHT;
+int key_menu_back      = PAD_BUTTON_B;
+int key_menu_forward   = PAD_BUTTON_A;
+int key_menu_confirm   = PAD_BUTTON_Y;
+int key_menu_abort     = PAD_BUTTON_X;
 
 int key_menu_help      = KEY_F1;
 int key_menu_save      = KEY_F2;
