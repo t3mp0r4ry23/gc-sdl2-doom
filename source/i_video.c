@@ -293,7 +293,7 @@ void I_FinishUpdate (void)
     /* 600 = s_Fb height, 200 screenheight */
     /* 600 = s_Fb height, 200 screenheight */
     /* 2048 =s_Fb width, 320 screenwidth */
-    y_offset     = 20;
+    y_offset     = 40;
     x_offset     = (((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8)) / 2; // XXX: siglent FB hack: /4 instead of /2, since it seems to handle the resolution in a funny way
     //x_offset     = 0;
     x_offset_end = ((s_Fb.xres - (SCREENWIDTH  * fb_scaling)) * s_Fb.bits_per_pixel/8) - x_offset;
@@ -304,21 +304,19 @@ void I_FinishUpdate (void)
 
     y = SCREENHEIGHT;
 
+    while (y_offset--) {
+        line_out += x_offset + (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
+    }
     while (y--)
     {
         int i;
         for (i = 0; i < fb_scaling; i++) {
             line_out += x_offset;
-            if (y_offset) {
-                y_offset--;
-            } else {
-                //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
-                cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
-            }
+           //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
+            cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
             line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
         }
         line_in += SCREENWIDTH;
-        y_offset = 20;
     }
 
 	SDL_UpdateTexture(texture, NULL, fb_SDL, SDL_RESX * sizeof(uint32_t));
