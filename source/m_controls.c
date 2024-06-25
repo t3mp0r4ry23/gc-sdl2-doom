@@ -127,8 +127,8 @@ int key_weapon5 = '5';
 int key_weapon6 = '6';
 int key_weapon7 = '7';
 int key_weapon8 = '8';
-int key_prevweapon = 0;
-int key_nextweapon = 0;
+int key_prevweapon = 'o';
+int key_nextweapon = 'p';
 
 // Map control keys:
 
@@ -152,10 +152,10 @@ int key_menu_up        = KEY_UPARROW;
 int key_menu_down      = KEY_DOWNARROW;
 int key_menu_left      = KEY_LEFTARROW;
 int key_menu_right     = KEY_RIGHTARROW;
-int key_menu_back      = KEY_BACKSPACE;
-int key_menu_forward   = KEY_ENTER;
-int key_menu_confirm   = 'y';
-int key_menu_abort     = 'n';
+int key_menu_back      = KEY_RSHIFT;
+int key_menu_forward   = KEY_USE;
+int key_menu_confirm   = KEY_STRAFE_L;
+int key_menu_abort     = KEY_STRAFE_R;
 
 int key_menu_help      = KEY_F1;
 int key_menu_save      = KEY_F2;

@@ -75,16 +75,16 @@ static unsigned char toDoomKey(unsigned int key)
       key = KEY_FIRE;
       break;
     case PAD_TRIGGER_R:
-      //switch weapon +1
+      key = 'p';
       break;
     case PAD_TRIGGER_L:
-      //switch weapon -1
+      key = 'o';
       break;
     case PAD_BUTTON_A:
       key = KEY_USE;
       break;
     case PAD_BUTTON_B:
-      key = KEY_ENTER;
+      key = KEY_RSHIFT;
       break;
     case PAD_BUTTON_X:
       key = KEY_STRAFE_R;
