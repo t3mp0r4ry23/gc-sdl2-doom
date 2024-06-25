@@ -574,9 +574,9 @@ static void BuildIWADDirList(void)
         return;
     }
 
-    // Look in the current directory.  Doom always does this.
+    // Look in the specified directory in the sd card, as we don't know what the current directory is.
 
-    AddIWADDir(".");
+    AddIWADDir("sd:/sdl2-doom/wads");
 
     // Add DOOMWADDIR if it is in the environment
 
@@ -747,7 +747,7 @@ char *D_FindIWAD(int mask, GameMission_t *mission)
         }
 
         if (result == NULL) {
-            result = D_FindWADByName("sd:/sdl2-doom/DOOM1.wad");
+            result = D_FindWADByName("DOOM1.wad");
         }
     }
 
