@@ -1567,21 +1567,21 @@ boolean M_Responder (event_t* ev)
     {
 	switch(key)
 	{
-	  case KEY_USE:
+	  case KEY_BACKSPACE:
 	    /*if (saveCharIndex > 0)
 	    {
 		saveCharIndex--;
 		savegamestrings[saveSlot][saveCharIndex] = 0;
-	    }*/
+	    }
 	    break;
-
-          case KEY_BACKSPACE:
+*/
+          case KEY_ESCAPE:
             saveStringEnter = 0;
             M_StringCopy(savegamestrings[saveSlot], saveOldString,
                          SAVESTRINGSIZE);
             break;
 
-	  case KEY_ESCAPE:
+	  case KEY_USE:
 	    saveStringEnter = 0;
             savegamestrings[saveSlot][0] = 'g';
             savegamestrings[saveSlot][1] = 'c';
