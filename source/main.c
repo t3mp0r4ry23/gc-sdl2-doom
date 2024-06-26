@@ -10,13 +10,12 @@
 
 static int devices[] = {&__io_gcsda, &__io_gcsdb, &__io_gcsd2};
 static void *xfb = NULL;
-GXRModeObj *rmode;
+static GXRModeObj *rmode = NULL;
 
 int wadCount = 0;
 int done = 0;
 int cursorLine = 0;
 char **customargv;
-char wads[32][PATH_MAX];
 char *sdName;
 
 int main(int argc, char **argv) {
@@ -26,7 +25,6 @@ int main(int argc, char **argv) {
 	
 	PAD_Init();
 
-	
 	xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
 		
 	VIDEO_Configure(rmode);
@@ -39,10 +37,15 @@ int main(int argc, char **argv) {
 	if(rmode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
 	
 	
-	console_init(xfb,64,64,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*2);
+	console_init(xfb,20,20,rmode->fbWidth,rmode->xfbHeight,rmode->fbWidth*VI_DISPLAY_PIX_SZ);
 
-	customargv[0] = "";
-	customargv[1] = "-i";
+	customargv = malloc(sizeof(char*)*3);
+	customargv[0] = '\0';
+	customargv[1] = malloc(sizeof(char) * 3);
+	strcpy(customargv[1], "-i");
+	customargv[2] = malloc(sizeof(char) * PATH_MAX);
+	char **wads;
+	wads = malloc(sizeof(char*) * 32);
 
 	for (int i = 0; i < sizeof(devices) / sizeof(int); i++) {
 		fatUnmount("sd:/");
@@ -63,7 +66,7 @@ int main(int argc, char **argv) {
 	if (list_dir != NULL) {
 		int i = 0;
 		while ((list_item = readdir(list_dir)) && i < 32) {
-			list_item = readdir(list_dir);
+			wads[i] = malloc(PATH_MAX + 1);
 			strcpy(wads[i], list_item->d_name);
 			i++;
 		}
@@ -73,7 +76,7 @@ int main(int argc, char **argv) {
 	while (!done) {
 		PAD_ScanPads();
 		for (int line = 0; line < wadCount; line++) {
-			printf("%c %s", line == cursorLine ? '>' : ' ', wads[line]);
+			printf("%c %s\n", line == cursorLine ? '>' : ' ', wads[line]);
 		}
 
 		if ((PAD_ButtonsDown(0) & PAD_BUTTON_DOWN) || PAD_StickY(0) > 10) {
@@ -91,11 +94,12 @@ int main(int argc, char **argv) {
 			}
 		}
 		if (PAD_ButtonsDown(0) & PAD_BUTTON_A) {
-			strcpy(customargv[2], wads[cursorLine]);
+			sprintf(customargv[2], "%s/%s", "sd:/sdl2-doom/wads/", wads[cursorLine]);
 			done = 1;
 		}
 		VIDEO_WaitVSync();
+		printf("\x1b[u\x1b[0J");
 	}
-	xfb = NULL;
+
 	return I_Main(3, customargv);
 }
