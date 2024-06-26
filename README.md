@@ -1,61 +1,30 @@
-# SDL 2 DOOM
+# SDL2 DOOM - GameCube Port
 
 ## Overview
 
-This is a source port of the ID Software source release of DOOM. This repository is used as an educational tool for myself. Anyone 
-interested in hacking on this project is more than welcome to submit a pull request.
-
-This fork focuses on an SDL2 implementation of DOOM. Currently featuring an SDL2 renderer, sound API, and input via keyboard.
-
-## Build Status
-
-[![GNU/Linux](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/nix.yml/badge.svg)](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/nix.yml) <br>
-[![OSX](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/osx.yml/badge.svg)](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/osx.yml)<br>
-[![Windows MinGW-w64](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/windows-build.yml/badge.svg)](https://github.com/AlexOberhofer/sdl2-doom/actions/workflows/windows-build.yml)<br>
-
-## Screenshots 
-
-<p> 
-Examples of bootable WADs:
-<p><br>
-  
-<br><br>
-
-<p align="center">
-  <b>Ultimate DOOM</b><br>
-  <img width=70%" src="https://github.com/AlexOberhofer/sdl2_doom/raw/master/docs/ultimatedoom.PNG" alt="Ultimate Doom"/> <br>
-</p><br><br><br>
-
-<p align="center">
-    <b>DOOM II</b><br> 
-    <img width="70%" src="https://github.com/AlexOberhofer/sdl2_doom/raw/master/docs/doom2.PNG" alt="Doom II"/>
-</p><br><br><br>
+This is a port of SDL2 Doom to the Nintendo GameCube.
 
 ## Controls
 
 Basic Controls:
 
-| Keyboard Control | Doom Control  |
+| Gamepad Control | Doom Control  |
 |---|---|
-| Up / W | Move Up  |
-| Down / S | Move Down  |
-| Left / A | Move Left  |
-| Right / D | Move Right  |
-| Enter  | Enter  |
-| Space / Middle Click  | Use  |
-| Ctrl / Click  | Fire  |
-| Shift  | Run  |
-| Alt  | Strafe  |
-| Tab  | Automap |
-| F1 | Controls |
-| F2 | Save |
-| F3 | Load |
-
-Other keys may work. Mileage may vary.
+| Left Stick Forward / D-Pad Up | Move Forwards  |
+| Left Stick Back / D-Pad Down | Move Backwards  |
+| Left Stick Left / Y | Starfe Left  |
+| Left Stick Right / X | Move Right  |
+| A | Use / Enter  |
+| Z  | Fire  |
+| B  | Run / Backspace  |
+| L  | Switch Weapon Back  |
+| R | Switch Weapon Forward |
 
 ## History
 
 This branch was forked from the repository:
+[sdl2-doom](https://github.com/AlexOberhofer/sdl2-doom)
+, which itself was forked from:
 [doomgeneric](https://github.com/ozkl/doomgeneric)
 
 ## License 
