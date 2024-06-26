@@ -16,7 +16,6 @@ int wadCount = 0;
 int done = 0;
 int cursorLine = 0;
 char **customargv;
-char *sdName;
 
 int main(int argc, char **argv) {
 	VIDEO_Init();
@@ -55,8 +54,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	fatGetVolumeLabel("sd:/", sdName);
-	printf("WADs found on %s:\n\n", sdName);
+	printf("\nWADs found on the SD Card:\n\n");
 	printf("\x1b[1B\x1b[999D\x1b[s");
 
 	DIR *list_dir;
@@ -77,27 +75,31 @@ int main(int argc, char **argv) {
 
 	while (!done) {
 		PAD_ScanPads();
-		for (int line = 0; line < wadCount; line++) {
-			printf("%c %s\n", line == cursorLine ? '>' : ' ', wads[line]);
-		}
+		if (wadCount != 0) {
+			for (int line = 0; line < wadCount; line++) {
+				printf("%c %s%s\x1b[40;0m\x1b[37;0m\n", line == cursorLine ? '>' : ' ', line == cursorLine ? "\x1b[47;0m\x1b[30;0m" : "", wads[line]);
+			}
 
-		if ((PAD_ButtonsDown(0) & PAD_BUTTON_DOWN) || PAD_StickY(0) > 10) {
-			if (cursorLine < 31) {
-				cursorLine++;
-			} else {
-				cursorLine = 0;
+			if ((PAD_ButtonsDown(0) & PAD_BUTTON_DOWN) || PAD_StickY(0) > 10) {
+				if (cursorLine < 31) {
+					cursorLine++;
+				} else {
+					cursorLine = 0;
+				}
 			}
-		}
-		if ((PAD_ButtonsDown(0) & PAD_BUTTON_UP) || PAD_StickY(0) < -10) {
-			if (cursorLine > 0) {
-				cursorLine--;
-			} else {
-				cursorLine = 31;
+			if ((PAD_ButtonsDown(0) & PAD_BUTTON_UP) || PAD_StickY(0) < -10) {
+				if (cursorLine > 0) {
+					cursorLine--;
+				} else {
+					cursorLine = 31;
+				}
 			}
-		}
-		if (PAD_ButtonsDown(0) & PAD_BUTTON_A) {
-			sprintf(customargv[2], "%s/%s", "sd:/sdl2-doom/wads/", wads[cursorLine]);
-			done = 1;
+			if (PAD_ButtonsDown(0) & PAD_BUTTON_A) {
+				sprintf(customargv[2], "%s/%s", "sd:/sdl2-doom/wads/", wads[cursorLine]);
+				done = 1;
+			}
+		} else {
+			printf("Please put your wads in a folder at [SD ROOT]/sdl2-doom/wads/\n");
 		}
 		VIDEO_WaitVSync();
 		printf("\x1b[u\x1b[0J");
