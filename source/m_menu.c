@@ -505,7 +505,7 @@ void M_ReadSaveStrings(void)
     FILE   *handle;
     int     i;
     char    name[256];
-
+    
     for (i = 0;i < load_end;i++)
     {
         M_StringCopy(name, P_SaveGameFile(i), sizeof(name));
@@ -609,11 +609,11 @@ void M_DrawSave(void)
 	M_WriteText(LoadDef.x,LoadDef.y+LINEHEIGHT*i,savegamestrings[i]);
     }
 	
-    if (saveStringEnter)
+    /*if (saveStringEnter)
     {
 	i = M_StringWidth(savegamestrings[saveSlot]);
 	M_WriteText(LoadDef.x + i,LoadDef.y+LINEHEIGHT*saveSlot,"_");
-    }
+    }*/
 }
 
 //
@@ -634,7 +634,7 @@ void M_DoSave(int slot)
 //
 void M_SaveSelect(int choice)
 {
-    // we are going to be intercepting all chars
+    // we are going to be selecting a save
     saveStringEnter = 1;
     
     saveSlot = choice;
@@ -1567,28 +1567,29 @@ boolean M_Responder (event_t* ev)
     {
 	switch(key)
 	{
-	  case KEY_BACKSPACE:
+	  /*case KEY_BACKSPACE:
 	    if (saveCharIndex > 0)
 	    {
 		saveCharIndex--;
 		savegamestrings[saveSlot][saveCharIndex] = 0;
 	    }
-	    break;
+	    break;*/
 
           case KEY_ESCAPE:
             saveStringEnter = 0;
-            M_StringCopy(savegamestrings[saveSlot], saveOldString,
-                         SAVESTRINGSIZE);
+            //M_StringCopy(savegamestrings[saveSlot], saveOldString,
+            //             SAVESTRINGSIZE);
             break;
 
-	  case KEY_ENTER:
+	  case KEY_USE:
 	    saveStringEnter = 0;
+            M_StringCopy(savegamestrings[saveSlot], (char *) "gcsave", SAVESTRINGSIZE);
 	    if (savegamestrings[saveSlot][0])
 		M_DoSave(saveSlot);
 	    break;
 
 	  default:
-            // This is complicated.
+            /*// This is complicated.
             // Vanilla has a bug where the shift key is ignored when entering
             // a savegame name. If vanilla_keyboard_mapping is on, we want
             // to emulate this bug by using 'data1'. But if it's turned off,
@@ -1615,7 +1616,7 @@ boolean M_Responder (event_t* ev)
 	    {
 		savegamestrings[saveSlot][saveCharIndex++] = ch;
 		savegamestrings[saveSlot][saveCharIndex] = 0;
-	    }
+	    }*/
 	    break;
 	}
 	return true;
