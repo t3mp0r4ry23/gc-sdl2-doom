@@ -41,8 +41,8 @@ int main(int argc, char **argv) {
 
 	customargv = malloc(sizeof(char*)*3);
 	customargv[0] = '\0';
-	customargv[1] = malloc(sizeof(char) * 3);
-	strcpy(customargv[1], "-i");
+	customargv[1] = malloc(sizeof(char) * 6);
+	strcpy(customargv[1], "-iwad");
 	customargv[2] = malloc(sizeof(char) * PATH_MAX);
 	char **wads;
 	wads = malloc(sizeof(char*) * 32);
@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	fatGetVolumeLabel("sd", sdName);
+	fatGetVolumeLabel("sd:/", sdName);
 	printf("WADs found on %s:\n\n", sdName);
 	printf("\x1b[1B\x1b[999D\x1b[s");
 
@@ -66,9 +66,11 @@ int main(int argc, char **argv) {
 	if (list_dir != NULL) {
 		int i = 0;
 		while ((list_item = readdir(list_dir)) && i < 32) {
-			wads[i] = malloc(PATH_MAX + 1);
-			strcpy(wads[i], list_item->d_name);
-			i++;
+			if (list_item->d_type == DT_REG) {
+				wads[i] = malloc(PATH_MAX + 1);
+				strcpy(wads[i], list_item->d_name);
+				i++;
+			}
 		}
 		wadCount = i;
 	}
