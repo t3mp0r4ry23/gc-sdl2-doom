@@ -179,11 +179,12 @@ char *M_TempFile(char *s)
         tempdir = ".";
     }
 #else
-    // In Unix, just use /tmp.
+    // On GameCube, use sd:/sdl2-doom/tmp.
 
-    tempdir = "/tmp";
+    tempdir = "sd:/sdl2-doom/tmp";
 #endif
 
+    M_MakeDirectory(tempdir);
     return M_StringJoin(tempdir, DIR_SEPARATOR_S, s, NULL);
 }
 
