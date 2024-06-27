@@ -49,7 +49,13 @@ void getFileList(char *path, char **file_list) {
 	if (list_dir != NULL) {
 		while (list_item = readdir(list_dir)) {
 			if (list_item->d_type == DT_REG) {
+				file_list[list_entry] = malloc(sizeof(char) * (strlen(list_item->d_name) + 1));
+				printf("%s\n", list_item->d_name);
 				strcpy(file_list[list_entry], list_item->d_name);
+				if (strcmp(list_item->d_name, file_list[list_entry]))
+					puts("Something went wrong here!");
+				else
+					printf("%s", file_list[list_entry]);
 			}
 		}
 		closedir(list_dir);
@@ -100,21 +106,20 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	char **iwads;
 	iwadsCount = fileCount("sd:/sdl2-doom/iwads");
-	iwads = malloc(sizeof(char*) * iwadsCount);
-	for (int iwadFile = 0; iwadFile < iwadsCount; iwadFile++)
-		iwads[iwadFile] = malloc(PATH_MAX + 1);
+	char *iwads[iwadsCount];
 	getFileList("sd:/sdl2-doom/iwads", iwads);
+	printf("after listing iwads, iwads[1] is %s\n", iwads[1]);
+	sleep(2);
 	int selectedIWAD = 0;
-	char **pwads;
 	pwadsCount = fileCount("sd:/sdl2-doom/pwads");
-	pwads = malloc(sizeof(char*) * pwadsCount);
-	for (int pwadFile = 0; pwadFile < pwadsCount; pwadFile++)
-		pwads[pwadFile] = malloc(PATH_MAX + 1);
+	printf("after counting pwads, iwads[1] is %s\n", iwads[1]);
+	sleep(2);
+	char *pwads[pwadsCount];
 	getFileList("sd:/sdl2-doom/pwads", pwads);
-	int *selectedPWADs;
-	selectedPWADs = malloc(sizeof(int) * pwadsCount);
+	printf("after listing pwads, iwads[1] is %s\n", iwads[1]);
+	sleep(2);
+	int selectedPWADs[pwadsCount];
 
 	if (!iwadsCount) {
 		printf("\nERROR:\nNo IWADs found.\nPlease place one or more IWADS in a folder at [SD ROOT]/sdl2-doom/iwads/\n\nPress A to exit.\n");
@@ -131,6 +136,7 @@ int main(int argc, char **argv) {
 	printf("iwadsCount is %d\n", iwadsCount);
 	sleep(5);
 	printf("iwads[0] is %s\n", iwads[0]);
+	sleep(5);
 	printf("iwads[1] is %s\n", iwads[1]);
 	sleep(5);
 	printf("strlen(iwads[0]) is %d\n", strlen(iwads[0]));
@@ -213,23 +219,19 @@ int main(int argc, char **argv) {
 	customargv = malloc(sizeof(char*) * (3 + selectedPWADsCount + (selectedPWADsCount ? 1 : 0)));
 	customargv[0] = '\0';
 	strcpy(customargv[1], "-iwad");
+	customargv[2] = malloc(sizeof(char) * (20 + strlen(iwads[selectedIWAD])));
 	sprintf(customargv[2], "%s/%s", "sd:/sdl2-doom/iwads", iwads[selectedIWAD]);
-	for (int iwadFile = 0; iwadFile < iwadsCount; iwadFile++)
-		free(iwads[iwadFile]);
-	free(iwads);
 	if (selectedPWADsCount) {
 		customargc++;
 		strcpy(customargv[3], "-file");
 		for (int pwad = 0; pwad < pwadsCount; pwad++) {
 			if (selectedPWADs[pwad]) {
+				customargv[customargc] = malloc(sizeof(char) * (20 + strlen(pwads[pwad])));
 				sprintf(customargv[customargc], "%s/%s", "sd:/sdl2-doom/pwads", pwads[pwad]);
 				customargc++;
 			}
 		}
 	}
-	for (int pwadFile = 0; pwadFile < pwadsCount; pwadFile++)
-		free(pwads[pwadFile]);
-	free(pwads);
 
 	return I_Main(customargc, customargv);
 }
