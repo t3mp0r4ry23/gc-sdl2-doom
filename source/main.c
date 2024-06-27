@@ -52,10 +52,6 @@ void getFileList(char *path, char **file_list) {
 				file_list[list_entry] = malloc(sizeof(char) * (strlen(list_item->d_name) + 1));
 				printf("%s\n", list_item->d_name);
 				strcpy(file_list[list_entry], list_item->d_name);
-				if (strcmp(list_item->d_name, file_list[list_entry]))
-					puts("Something went wrong here!");
-				else
-					printf("%s", file_list[list_entry]);
 			}
 		}
 		closedir(list_dir);
