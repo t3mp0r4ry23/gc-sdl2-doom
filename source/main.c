@@ -17,7 +17,7 @@ int pwadsCount = 0;
 int selectedPWADsCount = 0;
 int done = 0;
 int cursorLine = 0;
-int customargc = 0;
+int customargc = 3;
 char **customargv;
 
 int fileCount(char *path) {
@@ -50,8 +50,8 @@ void getFileList(char *path, char **file_list) {
 		while (list_item = readdir(list_dir)) {
 			if (list_item->d_type == DT_REG) {
 				file_list[list_entry] = malloc(sizeof(char) * (strlen(list_item->d_name) + 1));
-				printf("%s\n", list_item->d_name);
 				strcpy(file_list[list_entry], list_item->d_name);
+				list_entry++;
 			}
 		}
 		closedir(list_dir);
@@ -103,19 +103,17 @@ int main(int argc, char **argv) {
 	}
 
 	iwadsCount = fileCount("sd:/sdl2-doom/iwads");
-	char *iwads[iwadsCount];
+	char **iwads;
+	iwads = malloc(sizeof(char*) * iwadsCount);
 	getFileList("sd:/sdl2-doom/iwads", iwads);
-	printf("after listing iwads, iwads[1] is %s\n", iwads[1]);
-	sleep(2);
 	int selectedIWAD = 0;
 	pwadsCount = fileCount("sd:/sdl2-doom/pwads");
-	printf("after counting pwads, iwads[1] is %s\n", iwads[1]);
-	sleep(2);
-	char *pwads[pwadsCount];
+	char **pwads;
+	pwads = malloc(sizeof(char*) * pwadsCount);
 	getFileList("sd:/sdl2-doom/pwads", pwads);
-	printf("after listing pwads, iwads[1] is %s\n", iwads[1]);
-	sleep(2);
 	int selectedPWADs[pwadsCount];
+	for (int selectPWAD = 0; selectPWAD < pwadsCount; selectPWAD++)
+		selectedPWADs[selectPWAD] = 0;
 
 	if (!iwadsCount) {
 		printf("\nERROR:\nNo IWADs found.\nPlease place one or more IWADS in a folder at [SD ROOT]/sdl2-doom/iwads/\n\nPress A to exit.\n");
@@ -128,18 +126,6 @@ int main(int argc, char **argv) {
 
 	printf("\nPress A to select an IWAD\n\n");
 	printf("\x1b[1B\x1b[999D\x1b[s");
-	printf("pause for debug\n");
-	printf("iwadsCount is %d\n", iwadsCount);
-	sleep(5);
-	printf("iwads[0] is %s\n", iwads[0]);
-	sleep(5);
-	printf("iwads[1] is %s\n", iwads[1]);
-	sleep(5);
-	printf("strlen(iwads[0]) is %d\n", strlen(iwads[0]));
-	sleep(5);
-	for (int iterator = 0; iterator < 5; iterator++)
-		printf("here's a printf with conditionals and escape codes inside a for loop %c%stest\x1b[40;0m\x1b[37;0m %s\n", iterator == 3 ? '0' : ' ', 1 ? "\x1b[47;0m\x1b[30;0m" : "", iwads[1]);
-	sleep(5);
 	while (!done) {
 		PAD_ScanPads();
 		for (int line = 0; line < iwadsCount; line++) {
@@ -178,7 +164,7 @@ int main(int argc, char **argv) {
 		while (!done) {
 			PAD_ScanPads();
 			for (int line = 0; line < pwadsCount; line++) {
-				printf("%c %s%s%s\x1b[40;0m\x1b[37;0m\n", line == cursorLine ? '>' : ' ', selectedPWADs[line] ? "\x1b[42;0m" : "", line == cursorLine ? "\x1b[47;0m\x1b[30;0m" : "  ", pwads[line]);
+				printf("%c %s%s%s\x1b[40;0m\x1b[37;0m\n", line == cursorLine ? '>' : ' ', line == cursorLine ? "\x1b[47;0m\x1b[30;0m" : "", selectedPWADs[line] ? "\x1b[42;0m" : "", pwads[line]);
 			}
 
 			if ((PAD_ButtonsDown(0) & PAD_BUTTON_DOWN) || PAD_StickY(0) > 10) {
@@ -214,20 +200,27 @@ int main(int argc, char **argv) {
 
 	customargv = malloc(sizeof(char*) * (3 + selectedPWADsCount + (selectedPWADsCount ? 1 : 0)));
 	customargv[0] = '\0';
+	customargv[1] = malloc(sizeof(char) * 6);
 	strcpy(customargv[1], "-iwad");
 	customargv[2] = malloc(sizeof(char) * (20 + strlen(iwads[selectedIWAD])));
 	sprintf(customargv[2], "%s/%s", "sd:/sdl2-doom/iwads", iwads[selectedIWAD]);
+	for (int iwad = 0; iwad < iwadsCount; iwad++)
+		free(iwads[iwad]);
+	free(iwads);
 	if (selectedPWADsCount) {
 		customargc++;
+		customargv[3] = malloc(sizeof(char) * 6);
 		strcpy(customargv[3], "-file");
 		for (int pwad = 0; pwad < pwadsCount; pwad++) {
 			if (selectedPWADs[pwad]) {
-				customargv[customargc] = malloc(sizeof(char) * (20 + strlen(pwads[pwad])));
-				sprintf(customargv[customargc], "%s/%s", "sd:/sdl2-doom/pwads", pwads[pwad]);
 				customargc++;
+				customargv[customargc - 1] = malloc(sizeof(char) * (20 + strlen(pwads[pwad])));
+				sprintf(customargv[customargc - 1], "%s/%s", "sd:/sdl2-doom/pwads", pwads[pwad]);
 			}
+			free(pwads[pwad]);
 		}
 	}
+	free(pwads);
 
 	return I_Main(customargc, customargv);
 }
