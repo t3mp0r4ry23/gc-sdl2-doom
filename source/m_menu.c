@@ -1418,7 +1418,6 @@ boolean M_Responder (event_t* ev)
     int             ch;
     int             key;
     int             i;
-    static  int     joywait = 0;
     static  int     mousewait = 0;
     static  int     mousey = 0;
     static  int     lasty = 0;
@@ -1464,99 +1463,11 @@ boolean M_Responder (event_t* ev)
   
     ch = 0;
     key = -1;
-	
-    if (ev->type == ev_joystick && joywait < I_GetTime())
+
+    if (ev->type == ev_keydown)
     {
-	if (ev->data3 < 0)
-	{
-	    key = key_menu_up;
-	    joywait = I_GetTime() + 5;
-	}
-	else if (ev->data3 > 0)
-	{
-	    key = key_menu_down;
-	    joywait = I_GetTime() + 5;
-	}
-		
-	if (ev->data2 < 0)
-	{
-	    key = key_menu_left;
-	    joywait = I_GetTime() + 2;
-	}
-	else if (ev->data2 > 0)
-	{
-	    key = key_menu_right;
-	    joywait = I_GetTime() + 2;
-	}
-		
-	if (ev->data1&1)
-	{
-	    key = key_menu_forward;
-	    joywait = I_GetTime() + 5;
-	}
-	if (ev->data1&2)
-	{
-	    key = key_menu_back;
-	    joywait = I_GetTime() + 5;
-	}
-        if (joybmenu >= 0 && (ev->data1 & (1 << joybmenu)) != 0)
-        {
-            key = key_menu_activate;
-	    joywait = I_GetTime() + 5;
-        }
-    }
-    else
-    {
-	if (ev->type == ev_mouse && mousewait < I_GetTime())
-	{
-	    mousey += ev->data3;
-	    if (mousey < lasty-30)
-	    {
-		key = key_menu_down;
-		mousewait = I_GetTime() + 5;
-		mousey = lasty -= 30;
-	    }
-	    else if (mousey > lasty+30)
-	    {
-		key = key_menu_up;
-		mousewait = I_GetTime() + 5;
-		mousey = lasty += 30;
-	    }
-		
-	    mousex += ev->data2;
-	    if (mousex < lastx-30)
-	    {
-		key = key_menu_left;
-		mousewait = I_GetTime() + 5;
-		mousex = lastx -= 30;
-	    }
-	    else if (mousex > lastx+30)
-	    {
-		key = key_menu_right;
-		mousewait = I_GetTime() + 5;
-		mousex = lastx += 30;
-	    }
-		
-	    if (ev->data1&1)
-	    {
-		key = key_menu_forward;
-		mousewait = I_GetTime() + 15;
-	    }
-			
-	    if (ev->data1&2)
-	    {
-		key = key_menu_back;
-		mousewait = I_GetTime() + 15;
-	    }
-	}
-	else
-	{
-	    if (ev->type == ev_keydown)
-	    {
-		key = ev->data1;
-		ch = ev->data2;
-	    }
-	}
+        key = ev->data1;
+        ch = ev->data2;
     }
     
     if (key == -1)

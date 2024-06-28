@@ -10,14 +10,16 @@ Basic Controls:
 
 | Gamepad Control | Doom Control  |
 |---|---|
-| Left Stick Forward / D-Pad Up | Move Forwards  |
-| Left Stick Back / D-Pad Down | Move Backwards  |
-| Left Stick Left / Y | Starfe Left  |
-| Left Stick Right / X | Move Right  |
-| A | Use / Enter  |
-| Z  | Fire  |
-| B  | Run / Backspace  |
-| L  | Switch Weapon Back  |
+| Left Stick Forward / D-Pad Up | Move Forwards |
+| Left Stick Back / D-Pad Down | Move Backwards |
+| Left Stick Left / Y | Starfe Left |
+| Left Stick Right / X | Move Right |
+| C-Stick Left / D-Pad Left | Turn Left |
+| C-Stick Right / D-Pad Right | Turn Right |
+| A | Use / Enter |
+| Z | Fire |
+| B | Run / Backspace |
+| L | Switch Weapon Back |
 | R | Switch Weapon Forward |
 
 ## History

@@ -54,7 +54,6 @@
 
 #include "i_endoom.h"
 #include "i_gcpad.h"
-#include "i_joystick.h"
 #include "i_system.h"
 #include "i_timer.h"
 #include "i_video.h"
@@ -270,13 +269,6 @@ void D_Display (void)
 		}
     }
 
-    if (testcontrols)
-    {
-        // Box showing current mouse speed
-
-        V_DrawMouseSpeedBox(testcontrols_mousespeed);
-    }
-
     menuactivestate = menuactive;
     viewactivestate = viewactive;
     inhelpscreensstate = inhelpscreens;
@@ -340,7 +332,6 @@ void D_BindVariables(void)
     M_ApplyPlatformDefaults();
 
     I_BindVideoVariables();
-    I_BindJoystickVariables();
     I_BindSoundVariables();
 
     M_BindBaseControls();
@@ -358,7 +349,6 @@ void D_BindVariables(void)
     NET_BindVariables();
 #endif
 
-    M_BindVariable("mouse_sensitivity",      &mouseSensitivity);
     M_BindVariable("sfx_volume",             &sfxVolume);
     M_BindVariable("music_volume",           &musicVolume);
     M_BindVariable("show_messages",          &showMessages);
@@ -378,29 +368,6 @@ void D_BindVariables(void)
         M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
         M_BindVariable(buf, &chat_macros[i]);
     }
-}
-
-//
-// D_GrabMouseCallback
-//
-// Called to determine whether to grab the mouse pointer
-//
-
-boolean D_GrabMouseCallback(void)
-{
-    // Drone players don't need mouse focus
-
-    if (drone)
-        return false;
-
-    // when menu is active or game is paused, release the mouse 
- 
-    if (menuactive || paused)
-        return false;
-
-    // only grab mouse when playing levels (but not demos)
-
-    return (gamestate == GS_LEVEL) && !demoplayback && !advancedemo;
 }
 
 //
@@ -425,7 +392,6 @@ void D_DoomLoop (void)
     TryRunTics();
 
     I_GraphicsCheckCommandLine();
-    I_SetGrabMouseCallback(D_GrabMouseCallback);
     I_InitGraphics();
     I_SetWindowTitle(gamedescription);
     I_EnableLoadingDisk();
@@ -1609,7 +1575,6 @@ void D_DoomMain (void)
     DEH_printf("I_Init: Setting up machine state.\n");
     I_CheckIsScreensaver();
     I_InitTimer();
-    I_InitJoystick();
     I_InitGCPad();
     I_InitSound(true);
     I_InitMusic();

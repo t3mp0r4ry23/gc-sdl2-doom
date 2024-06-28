@@ -173,25 +173,6 @@ int key_menu_incscreen = KEY_EQUALS;
 int key_menu_decscreen = KEY_MINUS;
 int key_menu_screenshot = 0;
 
-//
-// Joystick controls
-//
-
-int joybfire = 0;
-int joybstrafe = 1;
-int joybuse = 3;
-int joybspeed = 2;
-
-int joybstrafeleft = -1;
-int joybstraferight = -1;
-
-int joybjump = -1;
-
-int joybprevweapon = -1;
-int joybnextweapon = -1;
-
-int joybmenu = -1;
-
 // Control whether if a mouse button is double clicked, it acts like 
 // "use" has been pressed
 
@@ -218,17 +199,8 @@ void M_BindBaseControls(void)
     M_BindVariable("mouseb_strafe",      &mousebstrafe);
     M_BindVariable("mouseb_forward",     &mousebforward);
 
-    M_BindVariable("joyb_fire",          &joybfire);
-    M_BindVariable("joyb_strafe",        &joybstrafe);
-    M_BindVariable("joyb_use",           &joybuse);
-    M_BindVariable("joyb_speed",         &joybspeed);
-
-    M_BindVariable("joyb_menu_activate", &joybmenu);
-
     // Extra controls that are not in the Vanilla versions:
-
-    M_BindVariable("joyb_strafeleft",    &joybstrafeleft);
-    M_BindVariable("joyb_straferight",   &joybstraferight);
+    
     M_BindVariable("mouseb_strafeleft",  &mousebstrafeleft);
     M_BindVariable("mouseb_straferight", &mousebstraferight);
     M_BindVariable("mouseb_use",         &mousebuse);
@@ -257,7 +229,6 @@ void M_BindHexenControls(void)
 {
     M_BindVariable("key_jump",           &key_jump);
     M_BindVariable("mouseb_jump",        &mousebjump);
-    M_BindVariable("joyb_jump",          &joybjump);
 
     M_BindVariable("key_arti_all",             &key_arti_all);
     M_BindVariable("key_arti_health",          &key_arti_health);
@@ -301,7 +272,6 @@ void M_BindStrifeControls(void)
     // Strife also supports jump on mouse and joystick, and in the exact same
     // manner as Hexen!
     M_BindVariable("mouseb_jump",        &mousebjump);
-    M_BindVariable("joyb_jump",          &joybjump);
 }
 
 void M_BindWeaponControls(void)
@@ -317,9 +287,6 @@ void M_BindWeaponControls(void)
 
     M_BindVariable("key_prevweapon",     &key_prevweapon);
     M_BindVariable("key_nextweapon",     &key_nextweapon);
-
-    M_BindVariable("joyb_prevweapon",    &joybprevweapon);
-    M_BindVariable("joyb_nextweapon",    &joybnextweapon);
 
     M_BindVariable("mouseb_prevweapon",  &mousebprevweapon);
     M_BindVariable("mouseb_nextweapon",  &mousebnextweapon);

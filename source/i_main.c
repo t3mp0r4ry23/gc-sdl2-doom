@@ -24,7 +24,7 @@
 //#include "i_system.h"
 #include "m_argv.h"
 
-//funky little fix for devkitpro compatibility
+//allow us to call with arguments set in our new main function
 #include "i_main.h"
 
 //

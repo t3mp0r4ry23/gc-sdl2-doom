@@ -136,21 +136,6 @@ extern int mousebuse;
 extern int mousebprevweapon;
 extern int mousebnextweapon;
 
-extern int joybfire;
-extern int joybstrafe;
-extern int joybuse;
-extern int joybspeed;
-
-extern int joybjump;
-
-extern int joybstrafeleft;
-extern int joybstraferight;
-
-extern int joybprevweapon;
-extern int joybnextweapon;
-
-extern int joybmenu;
-
 extern int dclick_use;
 
 void M_BindBaseControls(void);

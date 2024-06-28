@@ -151,7 +151,6 @@ extern  boolean		nodrawers;
 
 
 extern  boolean         testcontrols;
-extern  int             testcontrols_mousespeed;
 
 
 
@@ -256,8 +255,6 @@ extern  boolean         precache;
 // wipegamestate can be set to -1
 //  to force a wipe on the next draw
 extern  gamestate_t     wipegamestate;
-
-extern  int             mouseSensitivity;
 
 extern  int             bodyqueslot;
 

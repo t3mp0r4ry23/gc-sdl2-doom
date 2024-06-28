@@ -33,8 +33,6 @@ typedef enum
 {
     ev_keydown,
     ev_keyup,
-    ev_mouse,
-    ev_joystick,
     ev_quit
 } evtype_t;
 
@@ -51,20 +49,8 @@ typedef struct
     //    data2: Ascii text of the character that was pressed,
     //           shifted appropriately (eg. '$' if 4 was pressed
     //           while shift was held).
-    //
-    // ev_mouse:
-    //    data1: Bitfield of buttons currently held down.
-    //           (bit 0 = left; bit 1 = right; bit 2 = middle).
-    //    data2: X axis mouse movement (turn).
-    //    data3: Y axis mouse movement (forward/backward).
-    //
-    // ev_joystick:
-    //    data1: Bitfield of buttons currently pressed.
-    //    data2: X axis mouse movement (turn).
-    //    data3: Y axis mouse movement (forward/backward).
-    //    data4: Third axis mouse movement (strafe).
 
-    int data1, data2, data3, data4;
+    int data1, data2;
 } event_t;
 
  
