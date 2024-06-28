@@ -37,7 +37,7 @@ typedef struct
     int mapping[MAX_INSTRUMENTS];
 } gus_config_t;
 
-char *gus_patch_path = "";
+char *gus_patch_path = "sd:/sdl2-doom/config/gus";
 unsigned int gus_ram_kb = 1024;
 
 static unsigned int MappingIndex(void)
