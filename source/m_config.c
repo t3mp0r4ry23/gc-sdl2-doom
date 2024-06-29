@@ -111,17 +111,6 @@ typedef struct
 static default_t	doom_defaults_list[] =
 {
     //!
-    // Mouse sensitivity.  This value is used to multiply input mouse
-    // movement to control the effect of moving the mouse.
-    //
-    // The "normal" maximum value available for this through the
-    // in-game options menu is 9. A value of 31 or greater will cause
-    // the game to crash when entering the options menu.
-    //
-
-    CONFIG_VARIABLE_INT(mouse_sensitivity),
-
-    //!
     // Volume of sound effects, range 0-15.
     //
 
@@ -407,40 +396,6 @@ static default_t	doom_defaults_list[] =
     CONFIG_VARIABLE_KEY(key_speed),
 
     //!
-    // If non-zero, mouse input is enabled.  If zero, mouse input is
-    // disabled.
-    //
-
-    CONFIG_VARIABLE_INT(use_mouse),
-
-    //!
-    // Mouse button to fire the currently selected weapon.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_fire),
-
-    //!
-    // Mouse button to turn on strafing.  When held down, the player
-    // will strafe left and right instead of turning left and right.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_strafe),
-
-    //!
-    // Mouse button to move forward.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_forward),
-
-    //!
-    // @game hexen strife
-    //
-    // Mouse button to jump.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_jump),
-
-    //!
     // @game doom heretic hexen
     //
     // Screen size, range 3-11.
@@ -706,38 +661,6 @@ static default_t extra_defaults_list[] =
     CONFIG_VARIABLE_INT(screen_bpp),
 
     //!
-    // If this is non-zero, the mouse will be "grabbed" when running
-    // in windowed mode so that it can be used as an input device.
-    // When running full screen, this has no effect.
-    //
-
-    CONFIG_VARIABLE_INT(grabmouse),
-
-    //!
-    // If non-zero, all vertical mouse movement is ignored.  This
-    // emulates the behavior of the "novert" tool available under DOS
-    // that performs the same function.
-    //
-
-    CONFIG_VARIABLE_INT(novert),
-
-    //!
-    // Mouse acceleration factor.  When the speed of mouse movement
-    // exceeds the threshold value (mouse_threshold), the speed is
-    // multiplied by this value.
-    //
-
-    CONFIG_VARIABLE_FLOAT(mouse_acceleration),
-
-    //!
-    // Mouse acceleration threshold.  When the speed of mouse movement
-    // exceeds this threshold value, the speed is multiplied by an
-    // acceleration factor (mouse_acceleration).
-    //
-
-    CONFIG_VARIABLE_INT(mouse_threshold),
-
-    //!
     // Sound output sample rate, in Hz.  Typical values to use are
     // 11025, 22050, 44100 and 48000.
     //
@@ -845,50 +768,7 @@ static default_t extra_defaults_list[] =
     CONFIG_VARIABLE_STRING(player_name),
 
 #endif
-
-    //!
-    // Mouse button to strafe left.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_strafeleft),
-
-    //!
-    // Mouse button to strafe right.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_straferight),
-
-    //!
-    // Mouse button to "use" an object, eg. a door or switch.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_use),
-
-    //!
-    // Mouse button to move backwards.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_backward),
-
-    //!
-    // Mouse button to cycle to the previous weapon.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_prevweapon),
-
-    //!
-    // Mouse button to cycle to the next weapon.
-    //
-
-    CONFIG_VARIABLE_INT(mouseb_nextweapon),
-
-    //!
-    // If non-zero, double-clicking a mouse button acts like pressing
-    // the "use" key to use an object in-game, eg. a door or switch.
-    //
-
-    CONFIG_VARIABLE_INT(dclick_use),
-
+    
 #ifdef FEATURE_SOUND
 
     //!

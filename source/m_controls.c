@@ -87,26 +87,6 @@ int key_invend    = KEY_END;
 int key_invuse    = KEY_ENTER;
 int key_invdrop   = KEY_BACKSPACE;
 
-
-//
-// Mouse controls
-//
-
-int mousebfire = 0;
-int mousebstrafe = 1;
-int mousebforward = 2;
-
-int mousebjump = -1;
-
-int mousebstrafeleft = -1;
-int mousebstraferight = -1;
-int mousebbackward = -1;
-int mousebuse = -1;
-
-int mousebprevweapon = -1;
-int mousebnextweapon = -1;
-
-
 int key_message_refresh = KEY_ENTER;
 int key_pause = KEY_PAUSE;
 int key_demo_quit = 'q';
@@ -172,11 +152,6 @@ int key_menu_gamma     = KEY_F11;
 int key_menu_incscreen = KEY_EQUALS;
 int key_menu_decscreen = KEY_MINUS;
 int key_menu_screenshot = 0;
-
-// Control whether if a mouse button is double clicked, it acts like 
-// "use" has been pressed
-
-int dclick_use = 1;
  
 // 
 // Bind all of the common controls used by Doom and all other games.
@@ -195,18 +170,7 @@ void M_BindBaseControls(void)
     M_BindVariable("key_strafe",         &key_strafe);
     M_BindVariable("key_speed",          &key_speed);
 
-    M_BindVariable("mouseb_fire",        &mousebfire);
-    M_BindVariable("mouseb_strafe",      &mousebstrafe);
-    M_BindVariable("mouseb_forward",     &mousebforward);
-
-    // Extra controls that are not in the Vanilla versions:
-    
-    M_BindVariable("mouseb_strafeleft",  &mousebstrafeleft);
-    M_BindVariable("mouseb_straferight", &mousebstraferight);
-    M_BindVariable("mouseb_use",         &mousebuse);
-    M_BindVariable("mouseb_backward",    &mousebbackward);
-    M_BindVariable("dclick_use",         &dclick_use);
-    M_BindVariable("key_pause",          &key_pause);
+   M_BindVariable("key_pause",          &key_pause);
     M_BindVariable("key_message_refresh", &key_message_refresh);
 }
 
@@ -228,7 +192,6 @@ void M_BindHereticControls(void)
 void M_BindHexenControls(void)
 {
     M_BindVariable("key_jump",           &key_jump);
-    M_BindVariable("mouseb_jump",        &mousebjump);
 
     M_BindVariable("key_arti_all",             &key_arti_all);
     M_BindVariable("key_arti_health",          &key_arti_health);
@@ -268,10 +231,6 @@ void M_BindStrifeControls(void)
     M_BindVariable("key_invEnd",         &key_invend);
     M_BindVariable("key_invUse",         &key_invuse);
     M_BindVariable("key_invDrop",        &key_invdrop);
-
-    // Strife also supports jump on mouse and joystick, and in the exact same
-    // manner as Hexen!
-    M_BindVariable("mouseb_jump",        &mousebjump);
 }
 
 void M_BindWeaponControls(void)
@@ -287,9 +246,6 @@ void M_BindWeaponControls(void)
 
     M_BindVariable("key_prevweapon",     &key_prevweapon);
     M_BindVariable("key_nextweapon",     &key_nextweapon);
-
-    M_BindVariable("mouseb_prevweapon",  &mousebprevweapon);
-    M_BindVariable("mouseb_nextweapon",  &mousebnextweapon);
 }
 
 void M_BindMapControls(void)

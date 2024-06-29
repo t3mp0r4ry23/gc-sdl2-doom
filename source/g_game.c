@@ -191,8 +191,7 @@ static const struct
 
 #define SLOWTURNTICS	6 
  
-#define NUMKEYS		256 
-#define MAX_JOY_BUTTONS 20
+#define NUMKEYS		256
 
 static boolean  gamekeydown[NUMKEYS]; 
 static int      turnheld;		// for accelerative turning  

@@ -67,7 +67,6 @@ extern boolean		chat_on;		// in heads-up code
 //
 // defaulted values
 //
-int			mouseSensitivity = 5;
 
 // Show messages has default, 0 = off, 1 = on
 int			showMessages = 1;
@@ -185,7 +184,6 @@ void M_ReadThis2(int choice);
 void M_QuitDOOM(int choice);
 
 void M_ChangeMessages(int choice);
-void M_ChangeSensitivity(int choice);
 void M_SfxVol(int choice);
 void M_MusicVol(int choice);
 void M_ChangeDetail(int choice);
@@ -335,7 +333,6 @@ enum
     detail,
     scrnsize,
     option_empty1,
-    mousesens,
     option_empty2,
     soundvol,
     opt_end
@@ -348,7 +345,6 @@ menuitem_t OptionsMenu[]=
     {1,"M_DETAIL",	M_ChangeDetail,'g'},
     {2,"M_SCRNSZ",	M_SizeDisplay,'s'},
     {-1,"",0,'\0'},
-    {2,"M_MSENS",	M_ChangeSensitivity,'m'},
     {-1,"",0,'\0'},
     {1,"M_SVOL",	M_Sound,'s'}
 };
@@ -997,9 +993,6 @@ void M_DrawOptions(void)
                       W_CacheLumpName(DEH_String(msgNames[showMessages]),
                                       PU_CACHE));
 
-    M_DrawThermo(OptionsDef.x, OptionsDef.y + LINEHEIGHT * (mousesens + 1),
-		 10, mouseSensitivity);
-
     M_DrawThermo(OptionsDef.x,OptionsDef.y+LINEHEIGHT*(scrnsize+1),
 		 9,screenSize);
 }
@@ -1172,27 +1165,6 @@ void M_QuitDOOM(int choice)
 
     M_StartMessage(endstring,M_QuitResponse,true);
 }
-
-
-
-
-void M_ChangeSensitivity(int choice)
-{
-    switch(choice)
-    {
-      case 0:
-	if (mouseSensitivity)
-	    mouseSensitivity--;
-	break;
-      case 1:
-	if (mouseSensitivity < 9)
-	    mouseSensitivity++;
-	break;
-    }
-}
-
-
-
 
 void M_ChangeDetail(int choice)
 {
@@ -1418,12 +1390,6 @@ boolean M_Responder (event_t* ev)
     int             ch;
     int             key;
     int             i;
-    static  int     mousewait = 0;
-    static  int     mousey = 0;
-    static  int     lasty = 0;
-    static  int     mousex = 0;
-    static  int     lastx = 0;
-
     // In testcontrols mode, none of the function keys should do anything
     // - the only key is escape to quit.
 
