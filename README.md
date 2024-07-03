@@ -13,7 +13,7 @@ Basic Controls:
 | Left Stick Forward / D-Pad Up | Move Forwards |
 | Left Stick Back / D-Pad Down | Move Backwards |
 | Left Stick Left / Y | Starfe Left |
-| Left Stick Right / X | Move Right |
+| Left Stick Right / X | Strafe Right |
 | C-Stick Left / D-Pad Left | Turn Left |
 | C-Stick Right / D-Pad Right | Turn Right |
 | A | Use / Enter |
